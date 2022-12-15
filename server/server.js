@@ -5,7 +5,7 @@ import cors from 'cors';
 require('dotenv').config();
 
 const morgan = require('morgan');
-const connect = require('./config/db.config');
+const connect = require('./src/config/db.config');
 const app = express();
 
 //DB Connection
@@ -17,8 +17,8 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 // route middleware
-readdirSync('./routes').map(
-    (r) => app.use('/api', require(`./routes/${r}`))
+readdirSync('./src/routes').map(
+    (r) => app.use('/api', require(`./src/routes/${r}`))
 );
 
 const port = process.env.PORT || 8000;
