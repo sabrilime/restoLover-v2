@@ -17,6 +17,10 @@ const commentSchema = new Schema({
         type: ObjectId,
         ref: "Restaurant",
     },
+    activity: {
+        type: ObjectId,
+        ref: "Activity",
+    },
 }, { timestamps: true }
 );
 

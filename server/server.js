@@ -5,6 +5,7 @@ import cors from 'cors';
 require('dotenv').config();
 
 const morgan = require('morgan');
+const helmet = require('helmet');
 const connect = require('./src/config/db.config');
 const app = express();
 
@@ -15,6 +16,7 @@ connect();
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(helmet());
 
 // route middleware
 readdirSync('./src/routes').map(

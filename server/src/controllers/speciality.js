@@ -3,15 +3,23 @@ import Speciality from '../models/speciality';
 export const specialities = async (req, res) => {
     let all = await Speciality.find({})
         .select('-restaurants')
+        .sort({ name: 1 })
         .exec();
     res.json(all);
 };
 
 export const restaurantsBySpeciality = async (req, res) => {
-    let speciality = await Speciality.findById(req.params.specialityId)
-    .populate('restaurants', '_id title')
-    .exec();
-    res.send(speciality);
+    try {
+        let speciality = await Speciality.findById(req.params.specialityId)
+        .populate('restaurants', '_id title')
+        .exec();
+        res.send(speciality);
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({
+            err: err.message
+        })
+    }
 };
 
 export const add = async (req, res) => {

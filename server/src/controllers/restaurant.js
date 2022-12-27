@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Restaurant from "../models/restaurant";
 import Address from "../models/address";
 import Speciality from "../models/speciality";
@@ -24,25 +25,23 @@ export const create = async (req, res) => {
     try {
         let fields = req.fields;
         let files = req.files;
-        req.fields.specialities = ["639629beddcb55577c71ad47", "639775eebbde0a08b4d89ee9"];
+        req.fields.specialities = req.fields.specialities.split(",");
+
         let restaurant = new Restaurant(fields);
-        restaurant.postedBy = "6394acb98f6b95b6757f88a8";
+        restaurant.postedBy = req.auth._id;
         let address = new Address(fields);
-        //console.log("RESTAURANT ===> ", restaurant);
-        //console.log("ADDRESS ===> ", address);
-        
-        //restaurant.postedBy = req.auth._id;
         //handle image
         if(files.image) {
             restaurant.image.data = fs.readFileSync(files.image.path);
             restaurant.image.contentType = files.image.type;
         }
 
-        //Add Address
+        //Add address
         let saveAddress = await address.save();
         restaurant.address = saveAddress._id;
-        
-        await Speciality.updateMany({ '_id': req.fields.specialities }, { $push: { restaurants: restaurant._id } });
+
+        await Speciality.updateMany({ '_id': { $in: req.fields.specialities } }, { $push: { restaurants: restaurant._id } });
+
         restaurant.save((err, result) => {
             if(err) {
                 console.log("saving restaurant error => ", err)
@@ -60,24 +59,37 @@ export const create = async (req, res) => {
 
 export const update = async (req, res) => {
     try {
+        let restaurantId = req.params.restaurantId
         let fields = req.fields;
         let files = req.files;
-
-        /*let data = {...fields}
+        req.fields.specialities = req.fields.specialities.split(",");
+        let data = {...fields}
         if(files.image) {
             let image = {}
             image.data = fs.readFileSync(files.image.path);
             image.contentType = files.image.type;
-
             data.image = image;
         }
-        let updated = await Hotel.findByIdAndUpdate(
-            req.params.hotelId, 
+
+        //update address
+        let addressId = await Restaurant.findById(restaurantId).select('address').exec();
+        await Address.findByIdAndUpdate(
+            addressId.address.toString(), 
+            data, 
+            {new: true,}
+        );
+        
+        await Speciality.updateOne(
+            { '_id': { $in: req.fields.specialities } }, 
+            { restaurants: restaurantId }
+        );
+        
+        let updated = await Restaurant.findByIdAndUpdate(
+            restaurantId, 
             data, 
             {new: true,}
         ).select('-image.data');
-        res.json(updated);*/
-
+        res.json(updated);
     } catch (err) {
         console.log(err);
         res.status(400).send('Hotel update failed. Try again.')
@@ -115,4 +127,12 @@ export const restaurantsByCity = async (req, res) => {
     .exec();
     const result = addresses.filter(address => address.address && address.address.city == req.params.city );
     res.json(result);
+};
+
+export const restaurantsOnlyDelivery = async (req, res) => {
+    let restaurants = await Restaurant.find({onlyDelivery: true})
+        .populate('address', '_id street zip city country')
+        .select('-image.data')
+        .exec();
+    res.json(restaurants);
 };

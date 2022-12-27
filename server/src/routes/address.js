@@ -8,12 +8,16 @@ import {requireSignin} from '../middlewares';
 
 //controllers
 import { 
-    countries, 
-    citiesByCountry, 
+    restaurantsCountries, 
+    restaurantsCitiesByCountry, 
+    activitiesCountries, 
+    activitiesCitiesByCountry 
 } from '../controllers/address';
 
-router.get('/address/countries', countries);
-router.get('/address/cities/:country', citiesByCountry);
+router.get('/address-restaurants/countries', restaurantsCountries);
+router.get('/address-restaurants/cities/:country', restaurantsCitiesByCountry);
+router.get('/address-activities/countries', activitiesCountries);
+router.get('/address-activities/cities/:country', activitiesCitiesByCountry);
 
 
 module.exports = router;

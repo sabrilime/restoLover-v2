@@ -20,8 +20,8 @@ import {
 router.get('/comment/:commentId', read);
 router.put('/comment/:commentId', requireSignin, update);
 router.delete('/comment/:commentId', requireSignin, remove);
-router.post('/comment/restaurant/:restaurantId', createCommentRestaurant);
-router.post('/comment/activity/:activityId', createCommentActivity);
+router.post('/comment/restaurant/:restaurantId', requireSignin, createCommentRestaurant);
+router.post('/comment/activity/:activityId', requireSignin, createCommentActivity);
 router.get('/comments/restaurant/:restaurantId', requireSignin, commentsByRestaurant);
 router.get('/comments/activity/:restaurantId', requireSignin, commentsByActivity);
 
