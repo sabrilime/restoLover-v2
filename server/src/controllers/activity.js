@@ -1,10 +1,10 @@
-import Activity from "../models/restaurant";
+import Activity from "../models/activity";
 import Address from "../models/address";
 import fs from 'fs';
 
 export const activities = async (req, res) => {
     let all = await Activity.find({})
-        .select()
+        .select('-image.data')
         .exec();
     res.json(all);
 };
@@ -22,27 +22,29 @@ export const create = async (req, res) => {
     try {
         let fields = req.fields;
         let files = req.files;
+
         let activity = new Activity(fields);
         activity.postedBy = req.auth._id;
+        let address = new Address(fields);
         //handle image
         if(files.image) {
             activity.image.data = fs.readFileSync(files.image.path);
             activity.image.contentType = files.image.type;
         }
 
-        let address = new Address(fields);
-        //Add Address
+        //Add address
         let saveAddress = await address.save();
         activity.address = saveAddress._id;
 
         activity.save((err, result) => {
             if(err) {
                 console.log("saving activity error => ", err)
-                res.status(400).send('Error saving')
+                res.status(400).send('Erreur ajout activité')
             }
             res.json(result);
-        })
+        });
     } catch (err) {
+        console.log(err);
         res.status(400).json({
             err: err.message
         })
@@ -51,27 +53,35 @@ export const create = async (req, res) => {
 
 export const update = async (req, res) => {
     try {
+        let activityId = req.params.activityId
         let fields = req.fields;
         let files = req.files;
-
-        /*let data = {...fields}
+        let data = {...fields}
         if(files.image) {
             let image = {}
             image.data = fs.readFileSync(files.image.path);
             image.contentType = files.image.type;
-
             data.image = image;
         }
-        let updated = await Hotel.findByIdAndUpdate(
-            req.params.hotelId, 
+
+        //update address
+        let addressId = await Activity.findById(activityId).select('address').exec();
+        await Address.findByIdAndUpdate(
+            addressId.address.toString(), 
+            data, 
+            {new: true,}
+        );
+
+        let updated = await Activity.findByIdAndUpdate(
+            activityId, 
             data, 
             {new: true,}
         ).select('-image.data');
-        res.json(updated);*/
+        res.json(updated);
 
     } catch (err) {
         console.log(err);
-        res.status(400).send('Hotel update failed. Try again.')
+        res.status(400).send('Activity update failed. Try again.')
     }
 };
 
@@ -88,4 +98,12 @@ export const image = async (req, res) => {
         res.set('Content-Type', activity.image.contentType);
         return res.send(activity.image.data);
     }
+};
+
+export const activitiesByCity = async (req, res) => {
+    let addresses = await Activity.find().populate('address', '_id street zip city country')
+    .sort({ title: 1 })
+    .exec();
+    const result = addresses.filter(address => address.address && address.address.city == req.params.city );
+    res.json(result);
 };

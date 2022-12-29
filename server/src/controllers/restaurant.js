@@ -79,10 +79,7 @@ export const update = async (req, res) => {
             {new: true,}
         );
         
-        await Speciality.updateOne(
-            { '_id': { $in: req.fields.specialities } }, 
-            { restaurants: restaurantId }
-        );
+        await Speciality.updateMany({ '_id': { $in: req.fields.specialities } }, { $addToSet: { restaurants: restaurantId } });
         
         let updated = await Restaurant.findByIdAndUpdate(
             restaurantId, 
@@ -92,7 +89,7 @@ export const update = async (req, res) => {
         res.json(updated);
     } catch (err) {
         console.log(err);
-        res.status(400).send('Hotel update failed. Try again.')
+        res.status(400).send('Restaurant update failed. Try again.')
     }
 };
 
@@ -124,6 +121,7 @@ export const restaurantsByUser = async (req, res) => {
 
 export const restaurantsByCity = async (req, res) => {
     let addresses = await Restaurant.find().populate('address', '_id street zip city country')
+    .sort({ title: 1 })
     .exec();
     const result = addresses.filter(address => address.address && address.address.city == req.params.city );
     res.json(result);

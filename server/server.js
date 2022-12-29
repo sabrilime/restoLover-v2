@@ -16,7 +16,9 @@ connect();
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(helmet());
+app.use(helmet({
+    crossOriginResourcePolicy: false,
+}));
 
 // route middleware
 readdirSync('./src/routes').map(
