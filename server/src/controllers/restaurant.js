@@ -115,6 +115,7 @@ export const searchListings = async (req, res) => {
 export const restaurantsByUser = async (req, res) => {
     const all = await Restaurant.find({postedBy: req.params.userId})
         .select('title')
+        .sort({ title: 1 })
         .exec();
     res.json(all);
 };

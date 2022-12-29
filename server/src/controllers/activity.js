@@ -107,3 +107,11 @@ export const activitiesByCity = async (req, res) => {
     const result = addresses.filter(address => address.address && address.address.city == req.params.city );
     res.json(result);
 };
+
+export const activitiesByUser = async (req, res) => {
+    const all = await Activity.find({postedBy: req.params.userId})
+        .select('title')
+        .sort({ title: 1 })
+        .exec();
+    res.json(all);
+};

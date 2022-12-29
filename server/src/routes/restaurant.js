@@ -21,7 +21,7 @@ import {
 } from '../controllers/restaurant';
 
 router.get('/restaurants', restaurants);
-router.get('/restaurant/:restaurantId', read);
+router.get('/restaurant/:restaurantId', requireSignin, read);
 router.post('/restaurant', requireSignin, formidable(), create);
 router.put('/update-restaurant/:restaurantId', requireSignin, formidable(), update);
 router.delete('/delete-restaurant/:restaurantId', requireSignin, remove);

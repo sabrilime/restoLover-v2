@@ -9,19 +9,24 @@ import {requireSignin} from '../middlewares';
 //controllers
 import { 
     favouriteRestaurantsByUser, 
+    isRestaurantFavourite, 
     createFavouriteRestaurant, 
     removeFavouriteRestaurant, 
     favouriteActivitiesByUser, 
+    isActivityFavourite, 
     createFavouriteActivity,
     removeFavouriteActivity,
 } from '../controllers/favourite';
 
 router.get('/favourite-restaurants/:userId', favouriteRestaurantsByUser);
-router.post('/favourite-restaurant', formidable(), createFavouriteRestaurant);
-router.delete('/favourite-restaurant', requireSignin, removeFavouriteRestaurant);
-router.get('/favourite-activities/:userId', favouriteActivitiesByUser);
-router.post('/favourite-activity', formidable(), createFavouriteActivity);
-router.delete('/favourite-activity', requireSignin, removeFavouriteActivity);
+router.get('/favourite-restaurant/:restaurantId', requireSignin, isRestaurantFavourite);
+router.post('/favourite-restaurant', requireSignin, createFavouriteRestaurant);
+router.post('/favourite-restaurant-delete', requireSignin, removeFavouriteRestaurant);
+
+router.get('/favourite-activities/:userId', requireSignin, favouriteActivitiesByUser);
+router.get('/favourite-activity/:activityId', requireSignin, isActivityFavourite);
+router.post('/favourite-activity', requireSignin, createFavouriteActivity);
+router.post('/favourite-activity-delete', requireSignin, removeFavouriteActivity);
 
 
 module.exports = router;

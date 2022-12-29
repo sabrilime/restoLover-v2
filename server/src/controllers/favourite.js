@@ -1,19 +1,29 @@
-import Favourite from "../models/restaurant";
-
-import fs from 'fs';
+import Favourite from "../models/favourite";
 
 export const favouriteRestaurantsByUser = async (req, res) => {
-    const favouriteRestaurants = await Favourite.find({postedBy: req.params.userId, restaurant: {$ne:null}})
-        .populate('restaurant', '_id title')
+    const isFavourite = await Favourite.find({user: req.params.userId, restaurant: {$ne:null}})
+    .populate('restaurant', '_id title')
+    .exec();
+    res.json(isFavourite);
+};
+
+export const isRestaurantFavourite = async (req, res) => {
+    let isFavourite = await Favourite.findOne({restaurant: req.params.restaurantId}).exec();
+    if(isFavourite) return res.json({ok: true});
+    res.json({ok: false});
+};
+
+export const favouriteActivitiesByUser = async (req, res) => {
+    const favouriteRestaurants = await Favourite.find({user: req.params.userId, activity: {$ne:null}})
+        .populate('activity', '_id title')
         .exec();
     res.json(favouriteRestaurants);
 };
 
-export const favouriteActivitiesByUser = async (req, res) => {
-    const favouriteRestaurants = await Favourite.find({postedBy: req.params.userId, activity: {$ne:null}})
-        .populate('activity', '_id title')
-        .exec();
-    res.json(favouriteRestaurants);
+export const isActivityFavourite = async (req, res) => {
+    let isFavourite = await Favourite.findOne({activity: req.params.activityId}).exec();
+    if(isFavourite) return res.json({ok: true});
+    res.json({ok: false});
 };
 
 export const createFavouriteRestaurant = async (req, res) => {
@@ -55,13 +65,14 @@ export const createFavouriteActivity = async (req, res) => {
 };
 
 export const removeFavouriteRestaurant = async (req, res) => {
-    let removed = await Favourite.findOneAndDelete({postedBy: req.body.userId, activity: req.body.restaurant})
+    console.log("DATA ==> ", req.body)
+    let removed = await Favourite.findOneAndDelete({user: req.body.user, restaurant: req.body.restaurant})
     .exec();
     res.json(removed);
 };
 
 export const removeFavouriteActivity = async (req, res) => {
-    let removed = await Favourite.findOneAndDelete({postedBy: req.body.userId, activity: req.body.activity})
+    let removed = await Favourite.findOneAndDelete({user: req.body.user, activity: req.body.activity})
     .exec();
     res.json(removed);
 };

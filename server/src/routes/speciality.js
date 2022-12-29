@@ -8,8 +8,8 @@ import {requireSignin} from '../middlewares';
 //controllers
 import { specialities, add, update, remove, restaurantsBySpeciality } from '../controllers/speciality';
 
-router.get('/specialities', specialities);
-router.get('/speciality-restaurants/:specialityId', restaurantsBySpeciality);
+router.get('/specialities', requireSignin, specialities);
+router.get('/speciality-restaurants/:specialityId', requireSignin, restaurantsBySpeciality);
 router.post('/add-speciality', add);
 router.put('/update-speciality/:specialityId', requireSignin, update);
 router.delete('/delete-speciality/:specialityId', requireSignin, remove);

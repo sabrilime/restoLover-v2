@@ -14,10 +14,10 @@ import {
     activitiesCitiesByCountry 
 } from '../controllers/address';
 
-router.get('/address-restaurants/countries', restaurantsCountries);
-router.get('/address-restaurants/cities/:country', restaurantsCitiesByCountry);
-router.get('/address-activities/countries', activitiesCountries);
-router.get('/address-activities/cities/:country', activitiesCitiesByCountry);
+router.get('/address-restaurants/countries', requireSignin, restaurantsCountries);
+router.get('/address-restaurants/cities/:country', requireSignin, restaurantsCitiesByCountry);
+router.get('/address-activities/countries', requireSignin, activitiesCountries);
+router.get('/address-activities/cities/:country', requireSignin, activitiesCitiesByCountry);
 
 
 module.exports = router;
