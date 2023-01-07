@@ -8,6 +8,19 @@ export const specialities = async (req, res) => {
     res.json(all);
 };
 
+export const speciality = async (req, res) => {
+    try {
+        let speciality = await Speciality.findById(req.params.specialityId)
+        .select('-restaurants')
+        .exec();
+        res.json(speciality);
+    } catch (err) {
+        res.status(400).json({
+            err: err.message
+        })
+    }
+};
+
 export const restaurantsBySpeciality = async (req, res) => {
     try {
         let speciality = await Speciality.findById(req.params.specialityId)

@@ -26,7 +26,7 @@ router.post('/restaurant', requireSignin, formidable(), create);
 router.put('/update-restaurant/:restaurantId', requireSignin, formidable(), update);
 router.delete('/delete-restaurant/:restaurantId', requireSignin, remove);
 router.get('/restaurant/image/:restaurantId', image);
-router.post('/search-listings', requireSignin, searchListings);
+router.get('/restaurants-search/:name', requireSignin, searchListings);
 router.get('/restaurants-user/:userId', requireSignin, restaurantsByUser);
 router.get('/restaurants-city/:city', requireSignin, restaurantsByCity);
 router.get('/restaurants/only-delivery', requireSignin, restaurantsOnlyDelivery);

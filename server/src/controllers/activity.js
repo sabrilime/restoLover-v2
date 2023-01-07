@@ -115,3 +115,11 @@ export const activitiesByUser = async (req, res) => {
         .exec();
     res.json(all);
 };
+
+export const searchListings = async (req, res) => {
+    const all = await Activity.find({title: { $regex: '.*' + req.params.name + '.*', $options: 'i' } })
+        .select('title')
+        .sort({ title: 1 })
+        .exec();
+    res.json(all);
+};

@@ -109,7 +109,11 @@ export const image = async (req, res) => {
 };
 
 export const searchListings = async (req, res) => {
-    //
+    const all = await Restaurant.find({title: { $regex: '.*' + req.params.name + '.*', $options: 'i' } })
+        .select('title')
+        .sort({ title: 1 })
+        .exec();
+    res.json(all);
 };
 
 export const restaurantsByUser = async (req, res) => {

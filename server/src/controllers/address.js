@@ -67,6 +67,7 @@ export const restaurantsCitiesByCountry = async (req, res) => {
     {
       $group: {
         _id: "$country.city",
+        zip : { $first: '$country.zip' },
       }
     },
     { $sort : { _id : 1 } }
@@ -140,6 +141,7 @@ export const activitiesCitiesByCountry = async (req, res) => {
       {
         $group: {
           _id: "$country.city",
+          zip : { $first: '$country.zip' },
         }
       },
       { $sort : { _id : 1 } }

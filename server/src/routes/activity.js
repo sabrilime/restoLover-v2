@@ -16,6 +16,7 @@ import {
     image,
     activitiesByCity, 
     activitiesByUser, 
+    searchListings, 
 } from '../controllers/activity';
 
 router.get('/activities', requireSignin, activities);
@@ -26,6 +27,7 @@ router.delete('/delete-activity/:activityId', requireSignin, remove);
 router.get('/activity/image/:activityId', image);
 router.get('/activities-city/:city', requireSignin, activitiesByCity);
 router.get('/activities-user/:userId', requireSignin, activitiesByUser);
+router.get('/activities-search/:name', requireSignin, searchListings);
 
 
 module.exports = router;
