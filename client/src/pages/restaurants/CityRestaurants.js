@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-import { restaurantsByCity } from '../../actions/restaurant';
 import ConnectNav from "../../components/menu/ConnectNav";
-import SmallCard from '../../cards/SmallCard';
+import SmallCard from '../../components/cards/SmallCard';
+import { restaurantsByCity } from '../../actions/restaurant';
 
 const CityRestaurants = (props) => {
     let { city } = useParams();

@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import ConnectNav from '../../components/menu/ConnectNav';
-import { activities } from "../../actions/activity";
 import ActivityNav from '../../components/menu/ActivityNav';
-import SmallCard from '../../cards/SmallCard';
+import SmallCard from '../../components/cards/SmallCard';
+import { activities } from "../../actions/activity";
 
 const Activities = () => {
     const {

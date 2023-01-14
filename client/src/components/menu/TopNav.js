@@ -1,5 +1,6 @@
 import {Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { FaSistrix } from "react-icons/fa";
 
 const TopNav = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,9 @@ const TopNav = () => {
           </Link>
           <Link className='nav-link' to="/creations/restaurants">
             Mes créations
+          </Link>
+          <Link className='nav-link' to="/search">
+            <FaSistrix />
           </Link>
         </>
       )}

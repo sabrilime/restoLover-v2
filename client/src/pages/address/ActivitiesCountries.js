@@ -2,8 +2,8 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import ConnectNav from "../../components/menu/ConnectNav";
 import ActivityNav from '../../components/menu/ActivityNav';
+import SmallCard from '../../components/cards/SmallCard';
 import { allActivitiesCountries } from "../../actions/address";
-import SmallCard from '../../cards/SmallCard';
 
 const ActivitiesCountries = () => {
     const {

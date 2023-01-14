@@ -55,6 +55,22 @@ const RestaurantCreateForm = ({
                 />
             </div>
             <div className='form-group mb-3'>
+                <Select
+                    showSearch
+                    onChange={(label) => setValues({...values, country: label})} 
+                    className="w-100 m-2" 
+                    size="large" 
+                    placeholder="Pays"
+                >
+                    {!!countryArr?.length &&
+                    countryArr.map(({ label, value }) => (
+                        <Option key={value} value={label}>
+                            {label}
+                        </Option>
+                    ))}
+                </Select>
+            </div>
+            <div className='form-group mb-3'>
                 <input 
                     type='text' 
                     name='street' 
@@ -83,22 +99,6 @@ const RestaurantCreateForm = ({
                     className='form-control'
                     value={city}
                 />
-            </div>
-            <div className='form-group mb-3'>
-                <Select
-                    showSearch
-                    onChange={(label) => setValues({...values, country: label})} 
-                    className="w-100 m-2" 
-                    size="large" 
-                    placeholder="Pays"
-                >
-                    {!!countryArr?.length &&
-                    countryArr.map(({ label, value }) => (
-                        <Option key={value} value={label}>
-                            {label}
-                        </Option>
-                    ))}
-                </Select>
             </div>
             <div className='form-group mb-3'>
                 <Multiselect

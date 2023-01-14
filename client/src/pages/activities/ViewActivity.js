@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import ConnectNav from "../../components/menu/ConnectNav";
-import { isOwner } from "../../hooks/owner";
-import { read } from "../../actions/activity";
-import { commentsByActivity, addCommentToActivity } from "../../actions/comment";
 import { toast } from 'react-toastify';
-import BigCard from "../../cards/BigCard";
+import { isOwner } from "../../hooks/owner";
+import ConnectNav from "../../components/menu/ConnectNav";
+import BigCard from "../../components/cards/BigCard";
 import Comment from '../../components/Comment';
 import CommentForm from "../../components/forms/CommentForm";
+import { read } from "../../actions/activity";
+import { commentsByActivity, addCommentToActivity } from "../../actions/comment";
 import { 
     isActivityFavourite,
     addActivityFavourite,

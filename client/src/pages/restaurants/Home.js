@@ -2,8 +2,8 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import ConnectNav from "../../components/menu/ConnectNav";
 import HomeNav from '../../components/menu/HomeNav';
+import SmallCard from '../../components/cards/SmallCard';
 import { allSpecialities } from "../../actions/speciality";
-import SmallCard from '../../cards/SmallCard';
 
 const Home = () => {
     const {

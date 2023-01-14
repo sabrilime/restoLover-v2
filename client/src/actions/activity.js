@@ -48,3 +48,10 @@ export const activitiesByUser = async (token, userId) =>
             Authorization: `Bearer ${token}`,
         }
     });
+
+export const searchActivities = async (token, name) => 
+    await axios.get(`${process.env.REACT_APP_API}/activities-search/${name}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });

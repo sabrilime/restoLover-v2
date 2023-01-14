@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-import { activitiesCitiesByCountry } from '../../actions/address';
 import ConnectNav from "../../components/menu/ConnectNav";
-import SmallCard from '../../cards/SmallCard';
+import SmallCard from '../../components/cards/SmallCard';
+import { activitiesCitiesByCountry } from '../../actions/address';
 
 const ActivitiesCities = () => {
     const {
@@ -37,7 +37,7 @@ const ActivitiesCities = () => {
                             {cities.map(city => (
                                 <SmallCard 
                                     key={city._id} 
-                                    name={city._id} 
+                                    name={(country === "France") ? city._id+" ("+city.zip.slice(0, 2)+")" : city._id}  
                                     link={`/activities/city/${city._id}`}
                                 />
                             ))}

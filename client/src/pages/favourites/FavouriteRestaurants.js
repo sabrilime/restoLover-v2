@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import ConnectNav from "../../components/menu/ConnectNav";
 import FavouriteNav from "../../components/menu/FavouriteNav";
+import SmallCard from '../../components/cards/SmallCard';
 import { FavouriteRestaurantsByUser } from "../../actions/favourite";
-import SmallCard from '../../cards/SmallCard';
 
 const FavouriteRestaurants = () => {
     const {auth} = useSelector((state) => ({ ...state }));

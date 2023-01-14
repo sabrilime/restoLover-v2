@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import ConnectNav from "../../components/menu/ConnectNav";
-import SmallCard from '../../cards/SmallCard';
+import SmallCard from '../../components/cards/SmallCard';
+import RestaurantBreadcrumbs from '../../components/menu/RestaurantBreadcrumbs';
 import { getOnlyDelivery } from "../../actions/restaurant";
 
 const OnlyDeliveryRestaurants = (props) => {
@@ -25,6 +26,10 @@ const OnlyDeliveryRestaurants = (props) => {
         <>
             <div className="container-fluid bg-secondary p-4">
                 <ConnectNav />
+            </div>
+
+            <div className="container-fluid p-4">
+                <RestaurantBreadcrumbs name="Uniquement livraison" />
             </div>
             
             <div className="row">

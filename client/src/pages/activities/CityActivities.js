@@ -2,8 +2,8 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import ConnectNav from "../../components/menu/ConnectNav";
+import SmallCard from '../../components/cards/SmallCard';
 import { activitiesByCity } from '../../actions/activity';
-import SmallCard from '../../cards/SmallCard';
 
 const CityActivities = (props) => {
     let { city } = useParams();

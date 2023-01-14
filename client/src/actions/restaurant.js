@@ -46,3 +46,10 @@ export const createRestaurant = async (token, data) => await axios.post(
         }
     }
 );
+
+export const searchRestaurants = async (token, name) => 
+    await axios.get(`${process.env.REACT_APP_API}/restaurants-search/${name}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });

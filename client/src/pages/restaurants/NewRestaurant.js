@@ -118,7 +118,6 @@ const NewRestaurant = () => {
                     </div>
                     <div className='col-md-2'>
                         <img src={preview} alt="preview_image" className='img img-fluid m-2' />
-                        <pre>{JSON.stringify(values, null, 4)}</pre>
                     </div>
                 </div>
             </div>

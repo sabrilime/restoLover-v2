@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { isOwner } from "../../hooks/owner";
 import Comment from '../../components/Comment';
 import ConnectNav from "../../components/menu/ConnectNav";
-import BigCard from "../../cards/BigCard";
+import BigCard from "../../components/cards/BigCard";
 import CommentForm from "../../components/forms/CommentForm";
-import { isOwner } from "../../hooks/owner";
 import { read } from "../../actions/restaurant";
 import { commentsByRestaurant, addCommentToRestaurant } from "../../actions/comment";
 import { 

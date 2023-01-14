@@ -2,13 +2,17 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import ConnectNav from "../../components/menu/ConnectNav";
 import HomeNav from '../../components/menu/HomeNav';
+import SmallCard from '../../components/cards/SmallCard';
 import { allCountries } from "../../actions/address";
-import SmallCard from '../../cards/SmallCard';
 
 const Countries = () => {
     const {
         auth: {token}
     } = useSelector((state) => ({ ...state }));
+
+    //speciality
+    const {speciality} = useSelector(state => state);
+    console.log("SPECIALITY ===> ", speciality)
 
     const [countries, setCountries] = useState([]);
 
