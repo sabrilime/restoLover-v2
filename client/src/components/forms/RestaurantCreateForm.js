@@ -1,23 +1,10 @@
 import { Multiselect } from "multiselect-react-dropdown";
-import countries from "i18n-iso-countries";
-import frLocale from "i18n-iso-countries/langs/fr.json";
-import { Select } from 'antd';
-
-const { Option } = Select;
+import Autocomplete from "react-google-autocomplete";
 
 const RestaurantCreateForm = ({
-    values, setValues, specialitiesList, handleChange, handleImageChange, handleCheckBoxChange, handleSelect, handleSubmit
+    values, specialitiesList, handleChange, handleImageChange, handleCheckBoxChange, handleSelect, handleCity, handleSubmit
 }) => {
-    const {title, instagram, halal, onlyDelivery, specialities, street, zip, city} = values
-
-    countries.registerLocale(frLocale);
-    const countryObj = countries.getNames("fr", { select: "official" });
-    const countryArr = Object.entries(countryObj).map(([key, value]) => {
-        return {
-          label: value,
-          value: key
-        };
-    });
+    const {title, instagram, halal, onlyDelivery, specialities, street, zip} = values
     
     return (
         <form onSubmit={handleSubmit}>
@@ -55,22 +42,6 @@ const RestaurantCreateForm = ({
                 />
             </div>
             <div className='form-group mb-3'>
-                <Select
-                    showSearch
-                    onChange={(label) => setValues({...values, country: label})} 
-                    className="w-100 m-2" 
-                    size="large" 
-                    placeholder="Pays"
-                >
-                    {!!countryArr?.length &&
-                    countryArr.map(({ label, value }) => (
-                        <Option key={value} value={label}>
-                            {label}
-                        </Option>
-                    ))}
-                </Select>
-            </div>
-            <div className='form-group mb-3'>
                 <input 
                     type='text' 
                     name='street' 
@@ -91,13 +62,11 @@ const RestaurantCreateForm = ({
                 />
             </div>
             <div className='form-group mb-3'>
-                <input 
-                    type='text' 
-                    name='city' 
-                    onChange={handleChange} 
-                    placeholder='Ville' 
+                <Autocomplete
                     className='form-control'
-                    value={city}
+                    placeholder='Ville' 
+                    apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+                    onPlaceSelected={(place) => handleCity(place)}
                 />
             </div>
             <div className='form-group mb-3'>

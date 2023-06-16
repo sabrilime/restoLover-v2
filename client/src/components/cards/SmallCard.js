@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { ShopOutlined } from "@ant-design/icons";
 import { FaHamburger } from "react-icons/fa";
 
-const SmallCard = ({ id, name, link }) => { 
+const SmallCard = ({ id, name, link, address="" }) => { 
     const navigate = useNavigate();
 
     const handleClick = async() => {
@@ -21,6 +21,7 @@ const SmallCard = ({ id, name, link }) => {
                         }
                     </h1>
                     <h4 className="text-light">{name}</h4>
+                    <h5 className="text-warning">{address}</h5>
                 </div>
             </div>
             <br />

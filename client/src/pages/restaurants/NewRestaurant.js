@@ -73,6 +73,13 @@ const NewRestaurant = () => {
         
     };
 
+    function handleCity (place) {
+        let addr = place.formatted_address.split(",");
+        (place.address_components[0] && place.address_components[0].long_name !== addr[0].trim())
+            ? setValues( (values) => ( { ...values, "city": place.address_components[0].long_name, "country": addr[1].trim() } ))
+            : setValues( (values) => ( { ...values, "city": addr[0].trim(), "country": addr[1].trim() } ))
+    };
+
     const handleImageChange = (e) => {
         setPreview(URL.createObjectURL(e.target.files[0]));
         setValues({ ...values, image: e.target.files[0] });
@@ -107,12 +114,12 @@ const NewRestaurant = () => {
                         <br />
                         <RestaurantCreateForm 
                             values={values} 
-                            setValues={setValues} 
                             specialitiesList={specialitiesList}
                             handleChange={handleChange} 
                             handleImageChange={handleImageChange} 
                             handleCheckBoxChange={handleCheckBoxChange} 
                             handleSelect={handleSelect} 
+                            handleCity={handleCity}
                             handleSubmit={handleSubmit} 
                         />
                     </div>

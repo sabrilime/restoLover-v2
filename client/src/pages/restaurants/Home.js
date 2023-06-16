@@ -4,6 +4,7 @@ import ConnectNav from "../../components/menu/ConnectNav";
 import HomeNav from '../../components/menu/HomeNav';
 import SmallCard from '../../components/cards/SmallCard';
 import { allSpecialities } from "../../actions/speciality";
+import { toast } from 'react-toastify';
 
 const Home = () => {
     const {
@@ -18,8 +19,14 @@ const Home = () => {
     }, []);
 
     const getAllSpecialities = async () => {
-        const res = await allSpecialities(token);
-        setSpecialities(res.data);
+        try{
+            const res = await allSpecialities(token);
+            setSpecialities(res.data);
+        } catch (err) {
+            console.log(err);
+            if(err.response.status === 400) toast.error(err.response.data);
+            else if(err.response.status === 401) toast.error(err.response.data);
+        }
     };
 
     return (

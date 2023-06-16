@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  backend:
+    env_file:
+        "./server/.env"
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile
+    image: "lioui/restolover-v2-api"
+    ports:
+      - "8000:8000"
+  frontend:
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile
+    image: "lioui/restolover-v2-frontend"
+    ports:
+      - "3000:3000"
+    links:
+      - "backend"

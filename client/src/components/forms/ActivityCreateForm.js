@@ -1,22 +1,9 @@
-import countries from "i18n-iso-countries";
-import frLocale from "i18n-iso-countries/langs/fr.json";
-import { Select } from 'antd';
-
-const { Option } = Select;
+import Autocomplete from "react-google-autocomplete";
 
 const ActivityCreateForm = ({
-    values, setValues, handleChange, handleImageChange, handleSubmit
+    values, setValues, handleChange, handleImageChange, handleCity, handleSubmit
 }) => {
-    const {title, type, street, zip, city} = values
-
-    countries.registerLocale(frLocale);
-    const countryObj = countries.getNames("fr", { select: "official" });
-    const countryArr = Object.entries(countryObj).map(([key, value]) => {
-        return {
-          label: value,
-          value: key
-        };
-    });
+    const {title, type, street, zip} = values
     
     return (
         <form onSubmit={handleSubmit}>
@@ -74,30 +61,12 @@ const ActivityCreateForm = ({
                 />
             </div>
             <div className='form-group mb-3'>
-                <input 
-                    type='text' 
-                    name='city' 
-                    onChange={handleChange} 
-                    placeholder='Ville' 
+                <Autocomplete
                     className='form-control'
-                    value={city}
+                    placeholder='Ville' 
+                    apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+                    onPlaceSelected={(place) => handleCity(place)}
                 />
-            </div>
-            <div className='form-group mb-3'>
-                <Select
-                    showSearch
-                    onChange={(label) => setValues({...values, country: label})} 
-                    className="w-100 m-2" 
-                    size="large" 
-                    placeholder="Pays"
-                >
-                    {!!countryArr?.length &&
-                    countryArr.map(({ label, value }) => (
-                        <Option key={value} value={label}>
-                            {label}
-                        </Option>
-                    ))}
-                </Select>
             </div>
 
             <button className='btn btn-outline-primary m-2'>Ajouter</button>

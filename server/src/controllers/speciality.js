@@ -24,7 +24,12 @@ export const speciality = async (req, res) => {
 export const restaurantsBySpeciality = async (req, res) => {
     try {
         let speciality = await Speciality.findById(req.params.specialityId)
-        .populate({ path: 'restaurants', select: 'title', options: { sort: [{'title': 1 }] } })
+        .populate({ 
+            path: 'restaurants', 
+            populate: { path: 'address', model: 'Address', select: 'city country'},
+            select: 'title', 
+            options: { sort: [{'title': 1 }] } 
+        })
         .exec();
         res.send(speciality);
     } catch (err) {

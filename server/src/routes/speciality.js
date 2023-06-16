@@ -10,7 +10,7 @@ import { specialities, speciality, add, update, remove, restaurantsBySpeciality 
 
 router.get('/specialities', requireSignin, specialities);
 router.get('/speciality/:specialityId', requireSignin, speciality);
-router.get('/speciality-restaurants/:specialityId', requireSignin, restaurantsBySpeciality);
+router.get('/speciality-restaurants/:specialityId', restaurantsBySpeciality);
 router.post('/add-speciality', add);
 router.put('/update-speciality/:specialityId', requireSignin, update);
 router.delete('/delete-speciality/:specialityId', requireSignin, remove);

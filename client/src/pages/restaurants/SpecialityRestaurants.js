@@ -55,6 +55,7 @@ const SpecialityRestaurants = (props) => {
                                     key={restaurant._id} 
                                     name={restaurant.title} 
                                     link={`/restaurant/${restaurant._id}`}
+                                    address={`${restaurant.address.city} (${restaurant.address.country})`} 
                                 />
                             ))}
                         </div>
